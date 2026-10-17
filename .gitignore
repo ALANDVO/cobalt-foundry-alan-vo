@@ -1,0 +1,55 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.coverage
+.htmlcov/
+- *.egg-info
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Build artifacts
+dist/
+build/
+frontend/dist/
+*.tgz
+
+# Vite
+.vite/
+
+# Environment
+.env
+.env.local
+*.env
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+*.pid
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Agent metadata
+.antigravitycli/
+.omp/

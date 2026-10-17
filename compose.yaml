@@ -1,0 +1,70 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=false
+      - DATABASE_URL=sqlite:///./data/skills.db
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      - keycloak
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health').read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "127.0.0.1:5173:80"
+    environment:
+      - VITE_API_BASE=http://localhost:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  # Keycloak OIDC provider (planned for round 2 — auth milestone)
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.1
+    command: start-dev --import-realm
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=change-me
+      - KC_DB=dev-mapdb
+      - KC_HTTP_ENABLED=true
+    volumes:
+      - ./keycloak/realms:/opt/keycloak/data/import/realm
+      - keycloak_data:/opt/keycloak/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  # ntfy notification service (for diff links — optional)
+  ntfy:
+    image: binwieder/ntfy:latest
+    ports:
+      - "127.0.0.1:8043:80"
+    command: serve --cors-allow "*"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  keycloak_data:

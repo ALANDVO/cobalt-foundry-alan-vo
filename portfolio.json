@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "name": "cobalt-foundry-alan-vo",
+  "owner": "ALANDVO",
+  "email": "alanvo@gmail.com",
+  "domain": "AI/ML developer tools",
+  "summary": "Work in progress: cobalt-foundry-alan-vo",
+  "workflows": [
+    "Index and discover skills from any GitHub repository layout by walking the filesystem for SKILL.md at arbitrary depth",
+    "Semantic search over indexed skills using TF-IDF with cosine similarity and domain keyword expansion",
+    "Display and export skill details with relevance scores, scope, and metadata"
+  ],
+  "auth": "oidc-keycloak-saml-broker",
+  "llm_providers": [
+    "openai-compatible",
+    "anthropic",
+    "gemini",
+    "ollama"
+  ],
+  "status": "work-in-progress"
+}

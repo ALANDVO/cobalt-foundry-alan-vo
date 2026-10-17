@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+.git
+.gitignore
+.env
+*.log
+*.tsbuildinfo
+__tests__
+src/__tests__
+.vscode
+.idea
