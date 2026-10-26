@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 — work-in-progress checkpoint
+
+Partial code published for continued development. Known issues: STATUS.md.
+
 ## 1.0.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
@@ -25,6 +29,9 @@ Partial code published for continued development. Known issues: STATUS.md.
   listing, skill detail retrieval, and audit log. All parameters validated.
 - **React + TypeScript frontend**: Vite-built dashboard with search, list,
   detail, and index workflows. Loading, error, and empty states throughout.
+- **Quality metrics**: Deterministic skill quality assessment (completeness,
+  description length, tag count, body word count, weighted overall score)
+  with `/api/v1/metrics` endpoint for sorting and filtering.
 - **Tests**: 66 backend pytest tests (discovery, parser, search, indexer, API)
   and 18 frontend Vitest tests (App, SkillSearch, SkillCard, Indexer).
 - **Docker**: Backend (Python slim, nonroot) and frontend (nginx, nonroot)
