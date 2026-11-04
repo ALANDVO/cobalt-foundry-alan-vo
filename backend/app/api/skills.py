@@ -19,7 +19,7 @@ from ..schemas.skill import (
     SkillSearchResponse,
 )
 from ..services.indexer import SkillIndexer
-from ..services.quality import assess_all
+from ..services.quality import assess_all, assess_skill
 from .deps import get_indexer
 
 router = APIRouter(prefix="/api/v1", tags=["skills"])
@@ -81,6 +81,8 @@ def search_skills(
         skill = skill_map.get(doc_id)
         if skill is None:
             continue
+        # Compute quality score for this skill
+        quality = assess_skill(skill.id, skill.title, skill.description, skill.tag_list, skill.body)
         hits.append(SkillSearchHit(
             id=skill.id,
             name=skill.name,
@@ -88,6 +90,7 @@ def search_skills(
             title=skill.title,
             description=skill.description,
             score=round(min(score, 1.0), 4),
+            quality_score=quality.overall_score,
             source_path=skill.source_path,
         ))
 
