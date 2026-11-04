@@ -62,10 +62,11 @@ Acceptance:
 - GET /api/v1/metrics returns sorted quality metrics for all indexed skills
 - Metrics are deterministic and data-driven (no LLM)
 - Low-quality skills can be identified and filtered
+- Quality scores included in search results for relevance-aware ranking
 
-Implementation: `backend/app/services/quality.py`
+Implementation: `backend/app/services/quality.py`, `backend/app/api/skills.py`, `backend/app/schemas/skill.py`
 
-Tests: `backend/tests/test_quality.py`
+Tests: `backend/tests/test_quality.py`, `backend/tests/test_api.py`
 
 ### auth-oidc — Keycloak OIDC authorization-code login
 
