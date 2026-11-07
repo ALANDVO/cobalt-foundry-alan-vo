@@ -61,3 +61,7 @@ Partial code published for continued development. Known issues: STATUS.md.
 - LLM advisory explanations with multi-provider support
 - Skill installation and preview workflows
 - SAML identity brokering
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

@@ -101,3 +101,6 @@ Acceptance:
 - Conflict detection and resolution
 - Export installed skills as a manifest
 
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

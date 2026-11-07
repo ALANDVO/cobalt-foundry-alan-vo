@@ -100,3 +100,7 @@ values come from the API at runtime.
 - **Bearer-only API**: Access tokens kept in memory, never in localStorage
 - **Role-based access**: Viewer / operator / admin roles
 - **LLM adapter**: Optional advisory explanations via server-side API key
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

@@ -104,3 +104,7 @@ A local-only demo mode will be added that:
 ## Environment Variables
 
 See `.env.example` for all available configuration options.
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)

@@ -110,3 +110,7 @@ Return recent audit-log entries.
 ```json
 [{"id": 1, "action": "index_repo", "detail": "{...}", "created_at": "..."}]
 ```
+
+---
+
+Alan Vo · [alanvo.net](https://alanvo.net)
