@@ -1,9 +1,17 @@
 # Changelog
 
-## 1.2.0 — work-in-progress checkpoint
+## 1.3.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
 
+## 1.2.1 — work-in-progress checkpoint
+
+- Added quality_score to search results (SkillSearchHit) for relevance-aware ranking
+- Frontend SkillCard now displays quality score alongside relevance score
+- Added backend tests for quality_score in search results (deterministic, in range)
+- Updated frontend test mocks with quality_score
+
+## 1.2.0 — work-in-progress checkpoint
 ## 1.1.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.

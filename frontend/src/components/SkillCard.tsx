@@ -21,6 +21,9 @@ export function SkillCard({ hit, showScore = true }: SkillCardProps) {
         <span className={`badge ${badgeClass}`}>{hit.scope}</span>
         <span className="name">{hit.name}</span>
         {showScore && <span className="score">Relevance: {hit.score.toFixed(2)}</span>}
+        {hit.quality_score !== null && showScore && (
+          <span className="quality-score">Quality: {hit.quality_score.toFixed(2)}</span>
+        )}
       </div>
       <h3 className="skill-title">{hit.title}</h3>
       {hit.description && (
