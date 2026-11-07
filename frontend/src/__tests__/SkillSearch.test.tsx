@@ -15,6 +15,7 @@ const mockResponse: SkillSearchResponse = {
       title: "AdMob Ads SDK Integration",
       description: "Integrate Google Mobile Ads SDK.",
       score: 0.95,
+      quality_score: 0.90,
       source_path: "ads/admob/SKILL.md",
     },
     {
@@ -24,6 +25,7 @@ const mockResponse: SkillSearchResponse = {
       title: "R8 Optimization Analyzer",
       description: "Analyze R8 optimization decisions.",
       score: 0.30,
+      quality_score: 0.75,
       source_path: "performance/r8-analyzer/SKILL.md",
     },
   ],

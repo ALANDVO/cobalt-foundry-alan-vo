@@ -30,6 +30,7 @@ export interface SkillSearchHit {
   title: string;
   description: string | null;
   score: number;
+  quality_score: number | null;
   source_path: string;
 }
 

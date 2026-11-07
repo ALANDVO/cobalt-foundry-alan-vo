@@ -135,6 +135,27 @@ class TestSearchEndpoint:
         for hit in resp.json()["hits"]:
             assert 0.0 <= hit["score"] <= 1.0
 
+    def test_search_results_include_quality_score(self, client):
+        """Search hits should include a quality_score in [0, 1]."""
+        client.post("/api/v1/skills/index", json={"repo_path": str(SAMPLE_REPO)})
+        resp = client.get("/api/v1/skills/search?q=android")
+        assert resp.status_code == 200
+        for hit in resp.json()["hits"]:
+            assert "quality_score" in hit
+            assert hit["quality_score"] is not None
+            assert 0.0 <= hit["quality_score"] <= 1.0
+
+
+    def test_search_quality_scores_deterministic(self, client):
+        """Repeated identical searches should produce same quality scores."""
+        client.post("/api/v1/skills/index", json={"repo_path": str(SAMPLE_REPO)})
+        resp1 = client.get("/api/v1/skills/search?q=optimization")
+        resp2 = client.get("/api/v1/skills/search?q=optimization")
+        assert resp1.status_code == 200
+        assert resp2.status_code == 200
+        hits1 = {h["id"]: h["quality_score"] for h in resp1.json()["hits"]}
+        hits2 = {h["id"]: h["quality_score"] for h in resp2.json()["hits"]}
+        assert hits1 == hits2
 
 class TestSkillDetailEndpoint:
     def test_get_skill_by_id(self, client):

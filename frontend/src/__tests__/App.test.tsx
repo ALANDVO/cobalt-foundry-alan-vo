@@ -80,6 +80,7 @@ describe("App", () => {
         title: "R8 Optimization Analyzer",
         description: "Analyze R8 optimization decisions.",
         score: 0.92,
+        quality_score: 0.85,
         source_path: "performance/r8-analyzer/SKILL.md",
       }],
     });
