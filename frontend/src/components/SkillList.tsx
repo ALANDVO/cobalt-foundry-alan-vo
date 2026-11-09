@@ -24,6 +24,7 @@ export function SkillList({ skills, loading, onEmpty }: SkillListProps) {
     title: s.title,
     description: s.description,
     score: 1.0,
+    quality_score: null,
     source_path: s.source_path,
   }));
 

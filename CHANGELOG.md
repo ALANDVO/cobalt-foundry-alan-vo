@@ -1,8 +1,21 @@
 # Changelog
 
-## 1.3.0 — work-in-progress checkpoint
+## 1.4.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
+
+## 1.3.0 — work-in-progress checkpoint
+
+- **skill-quality-metrics complete**: Deterministic skill quality assessment fully implemented
+  - Computes completeness (fraction of optional fields present), description length, tag count, body word count
+  - Weighted overall_score using geometric mean (completeness 35%, description 25%, tags 15%, body 25%)
+  - Arithmetic mean fallback prevents zero scores for partially-complete skills
+  - `GET /api/v1/metrics` returns metrics for all skills sorted by overall_score descending
+  - Quality scores included in search results (`quality_score` field) for relevance-aware ranking
+  - All metrics derived from actual stored records — no LLM, fully offline, deterministic
+- Backend: 81 pytest tests pass (discovery, parser, indexer, search, quality, API)
+- Frontend: 18 vitest tests pass; TypeScript build succeeds
+- Fixed frontend SkillList to pass quality_score=null for list view compatibility
 
 ## 1.2.1 — work-in-progress checkpoint
 
@@ -12,6 +25,7 @@ Partial code published for continued development. Known issues: STATUS.md.
 - Updated frontend test mocks with quality_score
 
 ## 1.2.0 — work-in-progress checkpoint
+
 ## 1.1.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
