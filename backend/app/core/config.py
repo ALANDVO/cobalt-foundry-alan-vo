@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     )
 
     app_name: str = "cobalt-foundry"
-    version: str = "1.0.0"
+    version: str = "1.3.0"
     debug: bool = False
     host: str = "127.0.0.1"
     port: int = 8000
