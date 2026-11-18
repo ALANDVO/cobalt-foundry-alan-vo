@@ -31,10 +31,6 @@ jobs:
         run: |
           .venv/bin/python -m pytest backend/tests -v
 
-      - name: Run preflight check
-        run: |
-          .venv/bin/python skills/github/scripts/preflight.py . --account alan
-
   frontend-test:
     runs-on: ubuntu-latest
     steps:
@@ -84,3 +80,4 @@ jobs:
           context: .
           file: frontend/Dockerfile
           push: false
+

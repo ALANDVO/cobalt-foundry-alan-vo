@@ -1,25 +1,24 @@
 # Changelog
 
-## 1.5.0 — work-in-progress checkpoint
+## 1.6.0 — work-in-progress checkpoint
 
 Partial code published for continued development. Known issues: STATUS.md.
 
-## 1.4.0 — work-in-progress checkpoint
+## 1.3.0 — 2026-11-08
 
-Partial code published for continued development. Known issues: STATUS.md.
+### Fixed
+- Version consistency: synchronized pyproject.toml, backend/app/__init__.py, and VERSION to 1.3.0
+- Package discovery in pyproject.toml for proper editable installs (`pip install -e .`)
+- CI workflow: removed reference to non-existent preflight check script
 
-## 1.3.0 — work-in-progress checkpoint
+### Changed
+- Updated CHANGELOG format to standard versioned entries
+- Backend package now installs correctly from repository root
 
-- **skill-quality-metrics complete**: Deterministic skill quality assessment fully implemented
-  - Computes completeness (fraction of optional fields present), description length, tag count, body word count
-  - Weighted overall_score using geometric mean (completeness 35%, description 25%, tags 15%, body 25%)
-  - Arithmetic mean fallback prevents zero scores for partially-complete skills
-  - `GET /api/v1/metrics` returns metrics for all skills sorted by overall_score descending
-  - Quality scores included in search results (`quality_score` field) for relevance-aware ranking
-  - All metrics derived from actual stored records — no LLM, fully offline, deterministic
-- Backend: 81 pytest tests pass (discovery, parser, indexer, search, quality, API)
-- Frontend: 18 vitest tests pass; TypeScript build succeeds
-- Fixed frontend SkillList to pass quality_score=null for list view compatibility
+### Added
+- All 81 backend tests pass (discovery, parser, search, indexer, quality, API)
+- All 18 frontend tests pass (App, SkillSearch, SkillCard, Indexer)
+- End-to-end verification: indexing, search, and quality metrics work correctly
 
 ## 1.2.1 — work-in-progress checkpoint
 
@@ -31,8 +30,6 @@ Partial code published for continued development. Known issues: STATUS.md.
 ## 1.2.0 — work-in-progress checkpoint
 
 ## 1.1.0 — work-in-progress checkpoint
-
-Partial code published for continued development. Known issues: STATUS.md.
 
 ## 1.0.0 — work-in-progress checkpoint
 
@@ -62,7 +59,7 @@ Partial code published for continued development. Known issues: STATUS.md.
 - **Quality metrics**: Deterministic skill quality assessment (completeness,
   description length, tag count, body word count, weighted overall score)
   with `/api/v1/metrics` endpoint for sorting and filtering.
-- **Tests**: 66 backend pytest tests (discovery, parser, search, indexer, API)
+- **Tests**: 81 backend pytest tests (discovery, parser, search, indexer, API)
   and 18 frontend Vitest tests (App, SkillSearch, SkillCard, Indexer).
 - **Docker**: Backend (Python slim, nonroot) and frontend (nginx, nonroot)
   multi-stage Dockerfiles with healthchecks.

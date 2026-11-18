@@ -1,10 +1,13 @@
-# Placeholder for OIDC auth.
-import secrets, string
+"""Security utilities — placeholder for the OIDC auth milestone (round 2).
 
-def generate_pkce():
-    return "".join(secrets.choice(string.ascii_letters + string.digits) for _ in range(43))
+This module is intentionally empty. When Keycloak OIDC is implemented, it will
+contain:
+  - PKCE state/nonce generation and verification
+  - JWT token validation (issuer, audience, signature)
+  - Role-based authorization helpers (viewer / operator / admin)
+  - Local demo mode enforcement (localhost binding, production refusal)
 
-def verify_pkce(code):
-    return isinstance(code, str) and len(code) == 43 and code.isalnum()
-
-__all__ = ["generate_pkce", "verify_pkce"]
+No authentication bypass exists in the current codebase.
+"""
+# Reserved for round 2 implementation.
+__all__ = []

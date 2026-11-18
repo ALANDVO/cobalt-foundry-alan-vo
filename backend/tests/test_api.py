@@ -17,7 +17,7 @@ class TestHealthEndpoint:
         data = resp.json()
         assert data["status"] == "ok"
         assert "version" in data
-        assert data["version"] == "1.0.0"
+        assert data["version"] == "1.3.0"
 
 
 class TestIndexEndpoint:
