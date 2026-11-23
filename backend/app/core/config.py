@@ -23,11 +23,12 @@ class Settings(BaseSettings):
     llm_model: str | None = None
     llm_base_url: str | None = None
 
-    # Keycloak OIDC (planned for round 2)
+    # Keycloak OIDC (round 2 milestone)
     keycloak_realm: str | None = None
     keycloak_url: str | None = None
     keycloak_client_id: str | None = None
     keycloak_client_secret: str | None = None
+    keycloak_redirect_url: str | None = None
 
 
 settings = Settings()
