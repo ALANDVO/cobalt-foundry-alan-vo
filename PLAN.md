@@ -4,7 +4,7 @@ Each round completes one feature or repair. Future items are planned, not implem
 
 ## Current round
 
-skill-quality-metrics
+auth-oidc
 
 ## Roadmap
 
@@ -70,7 +70,7 @@ Tests: `backend/tests/test_quality.py`, `backend/tests/test_api.py`
 
 ### auth-oidc — Keycloak OIDC authorization-code login
 
-Status: planned
+Status: in_progress
 
 Acceptance:
 - SPA PKCE client with access tokens kept in memory
