@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cobalt-foundry"
-version = "1.7.0"
+version = "1.8.0"
 description = "AI/ML-powered skill discovery and semantic search for GitHub CLI skills"
 readme = "README.md"
 license = {text = "MIT"}
