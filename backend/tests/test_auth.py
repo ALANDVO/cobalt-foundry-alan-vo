@@ -8,6 +8,7 @@ from app.core.auth import (
     generate_code_verifier,
     generate_code_challenge,
     verify_code_challenge,
+    validate_id_token,
 )
 
 
@@ -40,11 +41,43 @@ class TestPKCE:
 
 
 class TestJWTValidation:
-    """Note: Full JWT validation requires a real Keycloak instance with
-    RS256 keys. These tests verify the validation scaffolding."""
+    """JWT validation in demo mode (Keycloak not configured) and production mode.
 
-    def test_validate_id_token_missing_issuer(self):
-        """validate_id_token should reject tokens with wrong issuer."""
+    In demo mode, tokens with valid JWT structure are accepted.
+    In production mode, full RS256 signature verification and issuer/audience
+    validation is performed against Keycloak configuration.
+    """
+
+    def test_validate_id_token_demo_mode_valid_token(self):
+        """validate_id_token should accept valid tokens in demo mode."""
+        # Encode as HS256 (any signature is accepted in demo mode)
+        from jose import jwt
+        payload = {"sub": "user123", "role": "viewer"}
+        token = jwt.encode(payload, "dummy-key", algorithm="HS256")
+
+        # In demo mode (no Keycloak config), valid structure should be accepted
+        from unittest.mock import patch
+        with patch("app.core.auth.settings.keycloak_url", None):
+            with patch("app.core.auth.settings.keycloak_realm", None):
+                result = validate_id_token(token, expected_audience="test-client")
+                # Should accept the token in demo mode
+                assert result is not None
+                assert result.get("sub") == "user123"
+
+    def test_validate_id_token_demo_mode_invalid_structure(self):
+        """validate_id_token should reject tokens with invalid JWT structure in demo mode."""
+        from unittest.mock import patch
+
+        with patch("app.core.auth.settings.keycloak_url", None):
+            with patch("app.core.auth.settings.keycloak_realm", None):
+                # Empty or malformed token should be rejected
+                with pytest.raises(Exception):
+                    validate_id_token("not-a-jwt-token", expected_audience="test-client")
+                with pytest.raises(Exception):
+                    validate_id_token("", expected_audience="test-client")
+
+    def test_validate_id_token_production_mode_rejects_wrong_issuer(self):
+        """validate_id_token should reject tokens with wrong issuer in production mode."""
         import json
         from jose import jwt
 
@@ -55,20 +88,22 @@ class TestJWTValidation:
             "sub": "user123",
             "exp": 9999999999,
         }
-        # Sign with a dummy key won't verify, but the options should
-        # still attempt validation
-        try:
-            token = jwt.encode(payload, "dummy-key", algorithm="HS256")
-            from fastapi import Request
-            # Just verify the function exists and raises on bad tokens
-            from app.core.auth import validate_id_token
-            with pytest.raises(Exception):
-                validate_id_token(token, expected_audience="test-client")
-        except Exception:
-            pytest.skip("jose not fully configured in test env")
+        token = jwt.encode(payload, "dummy-key", algorithm="HS256")
 
-    def test_validate_id_token_wrong_audience(self):
-        """validate_id_token should reject tokens with wrong audience."""
+        # In production mode (Keycloak config set), wrong issuer should be rejected
+        from unittest.mock import patch
+        with patch("app.core.auth.settings.keycloak_url", "https://keycloak.example.com"):
+            with patch("app.core.auth.settings.keycloak_realm", "master"):
+                try:
+                    validate_id_token(token, expected_audience="test-client")
+                    # If we get here, the token was unexpectedly accepted
+                    pytest.fail("Expected HTTPException for wrong issuer")
+                except Exception:
+                    # Expected - wrong issuer in production mode
+                    pass
+
+    def test_validate_id_token_production_mode_rejects_wrong_audience(self):
+        """validate_id_token should reject tokens with wrong audience in production mode."""
         import json
         from jose import jwt
 
@@ -78,10 +113,16 @@ class TestJWTValidation:
             "sub": "user123",
             "exp": 9999999999,
         }
-        try:
-            token = jwt.encode(payload, "dummy-key", algorithm="HS256")
-            from app.core.auth import validate_id_token
-            with pytest.raises(Exception):
-                validate_id_token(token, expected_audience="correct-client")
-        except Exception:
-            pytest.skip("jose not fully configured in test env")
+        token = jwt.encode(payload, "dummy-key", algorithm="HS256")
+
+        # In production mode, wrong audience should be rejected
+        from unittest.mock import patch
+        with patch("app.core.auth.settings.keycloak_url", "https://keycloak.example.com"):
+            with patch("app.core.auth.settings.keycloak_realm", "master"):
+                try:
+                    validate_id_token(token, expected_audience="correct-client")
+                    # If we get here, the token was unexpectedly accepted
+                    pytest.fail("Expected HTTPException for wrong audience")
+                except Exception:
+                    # Expected - wrong audience in production mode
+                    pass
